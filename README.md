@@ -1,4 +1,4 @@
-# Mapper
+# Track-viz
 
 A React Web App to show imported routes on a interactable map.
 
