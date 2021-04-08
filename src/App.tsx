@@ -1,21 +1,22 @@
-import './App.css';
+import './App.scss';
 import React from "react";
 import {MapContainer, TileLayer, Marker, Popup, Polyline} from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
-let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow
+L.Icon.Default.imagePath = '.';
+
+
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-L.Marker.prototype.options.icon = DefaultIcon;
 
-const polyline = []
+const polyline: L.LatLngExpression[] | L.LatLngExpression[][] = [];
 
-const redOptions = { color: 'red' }
+const redOptions = { color: 'red' };
 
 function App() {
   return (
