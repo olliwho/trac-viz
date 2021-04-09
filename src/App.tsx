@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import 'leaflet/dist/leaflet.css'
 import {Map} from "./Map";
 import {Route} from "./Route";
+import {FileUpload} from "./FileUpload";
 
 interface AppState {
     routes: Route[]
@@ -24,7 +25,6 @@ function App() {
     },[]);
     
     return (
-
         // <header/>
         <div className="app">
             <div className="map">
@@ -32,6 +32,7 @@ function App() {
             </div>
             <div className="Routes">
                 <h1>Routes</h1>
+                <FileUpload routes={state.routes}/>
             </div>
         </div>
         // <Footer/>

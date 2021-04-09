@@ -1,4 +1,5 @@
 import {LatLng} from "leaflet";
+import GPX from "gpx-parser-builder";
 
 export interface RouteInterface {
   name: string,
@@ -18,21 +19,21 @@ export class Route implements RouteInterface {
     let name: string;
     let coords: LatLng[];
 
-    const parser = require('fast-xml-parser');
+    const gpx = GPX.parse(routeXml);
+    const trackPoints = gpx.trk[0].trkseg[0].trkpt;
     
-    try{
-      let route = parser.parse(routeXml);
-      name = route.name;
-      coords = this.parseCoordsJson(route.trkseg);
-      return new Route(name, coords);
-    }catch(error){
-      console.log(error.message)
-      console.log("Could not parse file!")
-    }
+    name = gpx.trk[0].name;
+    coords = this.parseCoordsJson(trackPoints);
+    
+    return new Route(name, coords);
   }
   
-  private static parseCoordsJson(coords: JSON) {
-    //TODO
-    return [new LatLng(0, 0)];
+  private static parseCoordsJson(trackPoints : Array<any>) {
+    
+    let newCoords: LatLng[] = []
+    trackPoints.forEach(point => {
+      newCoords.push(new LatLng(point.$.lat, point.$.lon))
+    });
+    return newCoords;
   }
 }
